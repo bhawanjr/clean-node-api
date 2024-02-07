@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest",
-    "prepare": "husky"
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +19,6 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "git-commit-msg-linter": "^5.0.6",
-    "husky": "^9.0.10",
     "lint-staged": "^15.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
