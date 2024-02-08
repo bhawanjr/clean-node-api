@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src --ext ts --max-warnings=0",
-    "test": "vitest --silent",
-    "test:staged": "npm test --vitest --silent",
+    "test": "vitest --passWithNoTests --silent",
+    "test:verbose": "vitest --passWithNoTests --coverage",
     "prepare": "husky",
-    "typecheck": "tsc --project tsconfig.json"
+    "tsc": "tsc --project tsconfig.json"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "@types/node": "^20.11.16",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
+    "@vitest/coverage-v8": "^1.2.2",
     "eslint": "^8.56.0",
     "eslint-config-standard-with-typescript": "^43.0.1",
     "eslint-plugin-import": "^2.25.2",
