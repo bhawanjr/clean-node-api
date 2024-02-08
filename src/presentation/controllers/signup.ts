@@ -17,12 +17,10 @@ export class SignUpController implements Controller {
         return badRequest(new MissingParamError(field))
       }
     }
-
     const isValid = this.emailValidator.isValid(httpRequest.body.email)
     if (!isValid) {
       return badRequest(new InvalidParamError('email'))
     }
-    
     return {
       statusCode: 500,
       body: new Error('PRECISO VER O QUE VOU FAZER AQUI...')
