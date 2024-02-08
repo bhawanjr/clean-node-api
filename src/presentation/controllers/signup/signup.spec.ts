@@ -1,9 +1,7 @@
 import { describe, expect, it, vitest } from 'vitest' 
 import { SignUpController } from './signup'
-import { MissingParamError, InvalidParamError, ServerError } from '../errors'
-import { EmailValidator } from '../protocols'
-import { AccountModel } from '../../domain/models/account'
-import { AddAccountModel } from '../../domain/usecases/add-account'
+import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
+import { AccountModel, AddAccount, AddAccountModel, EmailValidator } from './signup-protocols'
 
 const makeEmailValidator = () => {
   class EmailValidatorStub implements EmailValidator {
@@ -12,10 +10,6 @@ const makeEmailValidator = () => {
     }
   }
   return new EmailValidatorStub()
-}
-
-interface AddAccount {
-  add (account: AddAccountModel): AccountModel
 }
 
 const makeAddAccount = () => {
