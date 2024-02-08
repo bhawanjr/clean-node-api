@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "vitest",
-    "test:staged": "vitest"
+    "lint": "eslint src --ext ts --max-warnings=0",
+    "test": "vitest --silent",
+    "test:staged": "npm test --vitest --silent",
+    "prepare": "husky",
+    "typecheck": "tsc --project tsconfig.json"
   },
   "keywords": [],
   "author": "",
