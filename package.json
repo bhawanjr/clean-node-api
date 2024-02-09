@@ -15,6 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
+    "@types/mongodb": "^4.0.7",
     "@types/node": "^20.11.16",
     "@types/validator": "^13.11.9",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
@@ -30,10 +31,12 @@
     "lint-staged": "^15.2.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
-    "vitest": "^1.2.2"
+    "vitest": "^1.2.2",
+    "vitest-mongodb": "^0.0.5"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
+    "mongodb": "^6.3.0",
     "validator": "^13.11.0"
   }
 }
