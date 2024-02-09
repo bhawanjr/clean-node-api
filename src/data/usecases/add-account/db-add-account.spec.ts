@@ -1,6 +1,6 @@
 import { describe, expect, it, vitest } from "vitest"
 import { DbAddAccount } from "./db-add-account"
-import { Encrypter } from "../protocolos/encrypter"
+import { Encrypter } from "./db-add-account-protocols"
 
 interface SutTypes {
   sut: DbAddAccount
