@@ -5,9 +5,7 @@ export const MongoHelper = {
   client: MongoClient,
 
   async connect (uri: string): Promise<void> {
-    console.log('Connecting in mongodb...')
     this.client = await MongoClient.connect(mongoUrl, {})
-    console.log('Mongodb connected.')
   },
 
   async disconnect (): Promise<void> {
@@ -16,5 +14,9 @@ export const MongoHelper = {
 
   getCollection (name: string): Collection {
     return this.client.db().collection(name)
+  },
+
+  mapper: (newId: string, model: any): any => {
+    return Object.assign({}, {id: newId }, model)
   }
 }
