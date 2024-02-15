@@ -2,11 +2,11 @@ import request from 'supertest'
 import app from '../config/app'
 import { afterAll, beforeAll, beforeEach, describe, it } from 'vitest'
 import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
-import { mongoUrl } from '../../../env'
+import env from '../config/env'
 
 describe('Signup Routes', () => {
   beforeAll(async () => {
-    await MongoHelper.connect(mongoUrl)
+    await MongoHelper.connect(env.mongoUrl)
   })
 
   afterAll(async () => {

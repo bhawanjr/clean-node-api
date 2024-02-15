@@ -1,11 +1,10 @@
 import { Collection, MongoClient } from "mongodb"
-import { mongoUrl } from "../../../../../env"
 
 export const MongoHelper = {
   client: MongoClient,
 
   async connect (uri: string): Promise<void> {
-    this.client = await MongoClient.connect(mongoUrl, {})
+    this.client = await MongoClient.connect(uri, {})
   },
 
   async disconnect (): Promise<void> {
