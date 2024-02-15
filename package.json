@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint src --ext ts --max-warnings=0",
+    "test:unit": "vitest",
     "test": "vitest --passWithNoTests --silent",
     "test:verbose": "vitest --passWithNoTests --coverage",
     "prepare": "husky",
