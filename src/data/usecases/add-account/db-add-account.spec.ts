@@ -56,7 +56,7 @@ describe('DbAddAccount Usecase', () => {
     expect(encryptSpy).toHaveBeenCalledWith('valid_password')
   })
 
-  it('Should thow if Encrypter throws', async () => {
+  it('Should throw if Encrypter throws', async () => {
     const { sut, encrypterStub } = makeSut()
     vitest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const accountData = {
@@ -84,7 +84,7 @@ describe('DbAddAccount Usecase', () => {
     })
   })
 
-  it('Should thow if DBAddAccount throws', async () => {
+  it('Should throw if DBAddAccount throws', async () => {
     const { sut, addAccountRepositoryStub } = makeSut()
     vitest.spyOn(addAccountRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const accountData = {
