@@ -1,8 +1,8 @@
+import { afterAll, beforeAll, beforeEach, describe, it } from 'vitest'
 import request from 'supertest'
 import app from '../config/app'
-import { afterAll, beforeAll, beforeEach, describe, it } from 'vitest'
-import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 import env from '../config/env'
+import { MongoHelper } from '../../infra/db/mongodb/helpers/mongo-helper'
 
 describe('Signup Routes', () => {
   beforeAll(async () => {
@@ -13,8 +13,8 @@ describe('Signup Routes', () => {
     await MongoHelper.disconnect()
   })
 
-  beforeEach(async() => {
-    const accountCollection = MongoHelper.getCollection('accounts')
+  beforeEach(async () => {
+    const accountCollection = await MongoHelper.getCollection('accounts')
     await accountCollection.deleteMany({})
   })
 
