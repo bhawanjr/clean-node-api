@@ -1,7 +1,8 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
-import { MongoHelper } from '../helpers/mongo-helper'
 import { AccountMongoRepository } from './account'
 import env from '../../../../main/config/env'
+import { MongoHelper } from '../helpers/mongo-helper'
+
 
 describe('Account Mongo Repository', () => {
   beforeAll(async () => {

@@ -7,7 +7,7 @@ export const MongoHelper = {
 
   async connect (uri: string): Promise<void> {
     this.uri = uri
-    this.client = await MongoClient.connect(uri, {})
+    this.client = await MongoClient.connect(this.uri, {})
     this.isConnected = true
   },
 
@@ -24,6 +24,14 @@ export const MongoHelper = {
       await this.connect(this.uri)
     }
     return this.client.db().collection(name)
+  },
+
+  getIsConnected (): boolean {
+    return this.isConnected
+  },
+
+  isAssigned (): boolean {
+    return this.client
   },
 
   mapper: (newId: string, model: any): any => {
