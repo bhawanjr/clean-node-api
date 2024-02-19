@@ -10,5 +10,7 @@ export class LoginController implements Controller {
     if (!httpRequest.body.password) {
       return new Promise(resolve => resolve(badRequest(new MissingParamError('password'))))
     }
+    //@ts-ignore
+    return new Promise(resolve => resolve(null))
   }
 }
