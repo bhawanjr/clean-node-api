@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, beforeEach, describe, it } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, test } from 'vitest'
 import request from 'supertest'
 import app from '../config/app'
 import env from '../config/env'
@@ -18,11 +18,11 @@ describe('Signup Routes', () => {
     await accountCollection.deleteMany({})
   })
 
-  it('Should return an account on success', async () => {
+  test('Should return an account on success', async () => {
     await request(app)
       .post('/api/signup')
       .send({
-        name: 'Nicoals',
+        name: 'Nicolas',
         email: 'nicolas@email.com',
         password: '123',
         passwordConfirmation: '123'

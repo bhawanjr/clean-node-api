@@ -1,4 +1,4 @@
-import { describe, expect, it, vitest } from "vitest"
+import { describe, expect, test, vitest } from "vitest"
 import { DbAddAccount } from "./db-add-account"
 import { Encrypter, AddAccountModel, AccountModel, AddAccountRepository } from "./db-add-account-protocols"
 
@@ -51,21 +51,21 @@ const makeSut = (): SutTypes => {
 }
 
 describe('DbAddAccount Usecase', () => {
-  it('Should call Encrypter with correct password', async () => {
+  test('Should call Encrypter with correct password', async () => {
     const { sut, encrypterStub } = makeSut()
     const encryptSpy = vitest.spyOn(encrypterStub, 'encrypt')
     await sut.add(makeFakeAccountData())
     expect(encryptSpy).toHaveBeenCalledWith('valid_password')
   })
 
-  it('Should throw if Encrypter throws', async () => {
+  test('Should throw if Encrypter throws', async () => {
     const { sut, encrypterStub } = makeSut()
     vitest.spyOn(encrypterStub, 'encrypt').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const promise = sut.add(makeFakeAccountData())
     await expect(promise).rejects.toThrow()
   })
 
-  it('Should call AddAccountRepository with correct values', async () => {
+  test('Should call AddAccountRepository with correct values', async () => {
     const { sut, addAccountRepositoryStub } = makeSut()
     const addSpy = vitest.spyOn(addAccountRepositoryStub, 'add')
     await sut.add(makeFakeAccountData())
@@ -76,14 +76,14 @@ describe('DbAddAccount Usecase', () => {
     })
   })
 
-  it('Should throw if DBAddAccount throws', async () => {
+  test('Should throw if DBAddAccount throws', async () => {
     const { sut, addAccountRepositoryStub } = makeSut()
     vitest.spyOn(addAccountRepositoryStub, 'add').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
     const promise = sut.add(makeFakeAccountData())
     await expect(promise).rejects.toThrow()
   })
 
-  it('Should return an account on success', async () => {
+  test('Should return an account on success', async () => {
     const { sut } = makeSut()
     const account = await sut.add(makeFakeAccountData())
     expect(account).toEqual(makeFakeAccount())

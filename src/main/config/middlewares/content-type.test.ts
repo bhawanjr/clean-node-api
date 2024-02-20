@@ -1,9 +1,9 @@
 import request from 'supertest'
 import app from '../app'
-import { describe, it } from 'vitest'
+import { describe, test } from 'vitest'
 
 describe('Content Type Middleware', () => {
-  it('Should return default content type as json', async () => {
+  test('Should return default content type as json', async () => {
     app.get('/test_content_type', (req, res) => {
       res.send('')
     })
@@ -12,7 +12,7 @@ describe('Content Type Middleware', () => {
       .expect('content-type', /json/)
   })
 
-  it('Should return xml content type when forced', async () => {
+  test('Should return xml content type when forced', async () => {
     app.get('/test_content_type_xml', (req, res) => {
       res.type('xml')
       res.send('')

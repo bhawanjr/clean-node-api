@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, test } from 'vitest'
 import { AccountMongoRepository } from './account'
 import env from '../../../../main/config/env'
 import { MongoHelper } from '../helpers/mongo-helper'
@@ -22,7 +22,7 @@ describe('Account Mongo Repository', () => {
     return new AccountMongoRepository
   }
 
-  it('Should return an account on sucess', async () => {
+  test('Should return an account on sucess', async () => {
     const sut = makeSut()
     const account = await sut.add({
       name: 'any_name',

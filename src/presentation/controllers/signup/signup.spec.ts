@@ -1,4 +1,4 @@
-import { describe, expect, it, vitest } from 'vitest' 
+import { describe, expect, vitest, test } from 'vitest' 
 import { SignUpController } from './signup'
 import { MissingParamError, ServerError } from '../../errors'
 import { AccountModel, AddAccount, AddAccountModel, HttpRequest, Validation } from './signup-protocols'
@@ -57,7 +57,7 @@ const makeSut = (): SutTypes => {
 }
 
 describe('SignUp Controller', () => {
-  it('Should return 500 if AddAccount throws', async () => {
+  test('Should return 500 if AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
     vitest.spyOn(addAccountStub, 'add').mockImplementationOnce(async () => {
       return new Promise((resolve, reject) => reject(new Error()))      
@@ -67,7 +67,7 @@ describe('SignUp Controller', () => {
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
-  it('Should call AddAccount with correct values', async () => {
+  test('Should call AddAccount with correct values', async () => {
     const { sut, addAccountStub } = makeSut()
     const addSpy = vitest.spyOn(addAccountStub, 'add')
     await sut.handle(makeFakeRequest())
@@ -78,13 +78,13 @@ describe('SignUp Controller', () => {
     })
   })
 
-  it('Should return 201 if valid data is provided', async () => {
+  test('Should return 201 if valid data is provided', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(created(makeFakeAccount()))
   })
 
-  it('Should call Validation with correct value', async () => {
+  test('Should call Validation with correct value', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = vitest.spyOn(validationStub, 'validate')
     const httpRequest = makeFakeRequest()
@@ -92,7 +92,7 @@ describe('SignUp Controller', () => {
     expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
   })
 
-  it('Should return 400 if Validation returns an error', async () => {
+  test('Should return 400 if Validation returns an error', async () => {
     const { sut, validationStub } = makeSut()
     vitest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('any_field'))
     const httpResponse = await sut.handle(makeFakeRequest())

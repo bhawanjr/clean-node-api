@@ -1,9 +1,9 @@
 import request from 'supertest'
 import app from '../app'
-import { describe, it } from 'vitest'
+import { describe, test } from 'vitest'
 
 describe('Cors Middleware', () => {
-  it('Should enable cors', async () => {
+  test('Should enable cors', async () => {
     app.get('/test_cors', (req, res) => {
       res.send()
     })

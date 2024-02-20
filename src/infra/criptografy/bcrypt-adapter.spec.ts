@@ -1,4 +1,4 @@
-import { describe, expect, it, vitest, vi } from 'vitest'
+import { describe, expect, vitest, vi, test } from 'vitest'
 import bcrypt from 'bcrypt'
 import { BcryptAdapter } from './bcrypt-adapter'
 
@@ -25,20 +25,20 @@ const makeSut = (): SutTypes => {
 }
 
 describe('BCrypt Adapter', () => {
-  it('Should call bcrypt with correct values', async () => {
+  test('Should call bcrypt with correct values', async () => {
     const { sut, salt } = makeSut()
     const hashSpy = vitest.spyOn(bcrypt, 'hash')
     await sut.encrypt('any_value')
     expect(hashSpy).toHaveBeenCalledWith('any_value', salt)
   })
 
-  it('Should returns a hash on success', async () => {
+  test('Should returns a hash on success', async () => {
     const { sut } = makeSut()
     const hash = await sut.encrypt('any_value')
     expect(hash).toBe('hashed_value')
   })
 
-  it('Should throw if bcrypt throws', async () => {
+  test('Should throw if bcrypt throws', async () => {
     const { sut } = makeSut()
     vitest.spyOn(bcrypt, 'hash').mockRejectedValueOnce(
       vi.fn().mockRejectedValue(new Error())
