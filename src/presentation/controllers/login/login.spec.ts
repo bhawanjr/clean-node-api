@@ -1,12 +1,12 @@
 import { describe, expect, test, vitest } from "vitest"
 import { LoginController } from "./login"
-import { HttpRequest, Authentication, Validation } from "./login-protocols"
+import { HttpRequest, Authentication, Validation, AuthenticationModel } from "./login-protocols"
 import { badRequest, ok, serverError, unauthorized } from "../../helpers/http/http-helper"
 import { MissingParamError } from "../../errors"
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (email: string, password: string): Promise<string>  {
+    async auth (authentication: AuthenticationModel): Promise<string>  {
       return new Promise(resolve => resolve('any_token'))
     }
   }
@@ -52,7 +52,10 @@ describe('Login Controller', () => {
     const { sut, authenticationStub } = makeSut()
     const authSpy = vitest.spyOn(authenticationStub, 'auth')
     await sut.handle(makeFakeRequest())
-    expect(authSpy).toHaveBeenLastCalledWith('any_email@mail.com', 'any_password')
+    expect(authSpy).toHaveBeenLastCalledWith({
+      email: 'any_email@mail.com', 
+      password: 'any_password'
+    })
   })
 
   test('Should return 401 if invalid credentials are provided', async () => {
