@@ -63,7 +63,8 @@ describe('SignUp Controller', () => {
       return new Promise((resolve, reject) => reject(new Error()))      
     })
     const httpResponse = await sut.handle(makeFakeRequest())
-    expect(httpResponse).toEqual(serverError(new ServerError(undefined)))
+    //@ts-ignore
+    expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
   it('Should call AddAccount with correct values', async () => {
