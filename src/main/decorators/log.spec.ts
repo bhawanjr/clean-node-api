@@ -2,7 +2,7 @@ import { vitest, describe, expect, test } from "vitest"
 import { LogControllerDecorator } from "./log"
 import { Controller, HttpRequest, HttpResponse } from "../../presentation/protocols"
 import { serverError, created } from "../../presentation/helpers/http/http-helper"
-import { LogErrorRepository } from "../../data/protocols/log-error-repository"
+import { LogErrorRepository } from "../../data/protocols/db/log-error-repository"
 import { AccountModel } from "../../domain/models/account"
 
 const makeLogErrorRepository = (): LogErrorRepository => {
