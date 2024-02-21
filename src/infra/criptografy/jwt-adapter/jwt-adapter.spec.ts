@@ -1,11 +1,11 @@
-import { describe, expect, test, vitest } from "vitest"
-import jwt from "jsonwebtoken"
-import { JwtAdapter } from "./jwt-adapter"
+import { describe, expect, test, vitest } from 'vitest'
+import jwt from 'jsonwebtoken'
+import { JwtAdapter } from './jwt-adapter'
 
 vitest.mock('jsonwebtoken', () => {
   return {
     default: {
-      sign: () => 'any_token'  
+      sign: () => 'any_token'
     }
   }
 })

@@ -4,10 +4,10 @@ import { Validation } from '../../protocols/validation'
 export class RequiredFieldValidation implements Validation {
   constructor (private readonly fieldName: string) {}
 
-  //@ts-ignore
-  validate(input: any): Error {
+  validate (input: any): Error | null {
     if (!input[this.fieldName]) {
       return new MissingParamError(this.fieldName)
-    }    
+    }
+    return null
   }
 }

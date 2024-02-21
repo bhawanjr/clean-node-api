@@ -1,4 +1,4 @@
-import { describe, expect, vitest, test } from 'vitest' 
+import { describe, expect, vitest, test } from 'vitest'
 import { EmailValidator } from '../../protocols/email-validator'
 import { EmailValidation } from './email-validation'
 import { InvalidParamError } from '../../errors'
@@ -13,7 +13,7 @@ const makeEmailValidator = () => {
 }
 
 interface SutTypes {
-  sut: EmailValidation,
+  sut: EmailValidation
   emailValidatorStub: EmailValidator
 }
 
@@ -27,17 +27,17 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Email Validation', () => {
-  test('Should return an error if EmaildValidator retunrs false'), () => {
+  test('Should return an error if EmaildValidator returns false', () => {
     const { sut, emailValidatorStub } = makeSut()
     vitest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
     const error = sut.validate({ email: 'any_email@mail.com' })
     expect(error).toEqual(new InvalidParamError('email'))
-  }
+  })
 
   test('Should call EmailValidator with correct email', () => {
-    const { sut, emailValidatorStub} = makeSut()
+    const { sut, emailValidatorStub } = makeSut()
     const isValidSpy = vitest.spyOn(emailValidatorStub, 'isValid')
-    sut.validate({ email: 'any_email@mail.com'})
+    sut.validate({ email: 'any_email@mail.com' })
     expect(isValidSpy).toHaveBeenCalledWith('any_email@mail.com')
   })
 

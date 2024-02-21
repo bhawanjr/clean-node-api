@@ -1,14 +1,14 @@
-import { vitest, describe, expect, test } from "vitest"
-import { LogControllerDecorator } from "./log-controller-decorator"
-import { Controller, HttpRequest, HttpResponse } from "../../presentation/protocols"
-import { serverError, created } from "../../presentation/helpers/http/http-helper"
-import { LogErrorRepository } from "../../data/protocols/db/log/log-error-repository"
-import { AccountModel } from "../../domain/models/account"
+import { vitest, describe, expect, test } from 'vitest'
+import { LogControllerDecorator } from './log-controller-decorator'
+import { Controller, HttpRequest, HttpResponse } from '../../presentation/protocols'
+import { serverError, created } from '../../presentation/helpers/http/http-helper'
+import { LogErrorRepository } from '../../data/protocols/db/log/log-error-repository'
+import { AccountModel } from '../../domain/models/account'
 
 const makeLogErrorRepository = (): LogErrorRepository => {
   class LogErrorRepositoryStub implements LogErrorRepository {
     async logError (stack: string): Promise<void> {
-      return new Promise(resolve => resolve())
+      await new Promise(resolve => { resolve(null) })
     }
   }
   return new LogErrorRepositoryStub()
@@ -37,8 +37,8 @@ const makeFakeServerError = (): HttpResponse => {
 }
 
 interface SutTypes {
-  sut: LogControllerDecorator,
-  controllerStub: Controller,
+  sut: LogControllerDecorator
+  controllerStub: Controller
   logErrorRepositoryStub: LogErrorRepository
 }
 
@@ -55,31 +55,31 @@ const makeSut = (): SutTypes => {
 
 const makeControllerStub = (): Controller => {
   class ControllerStub implements Controller {
-    async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-      return new Promise(resolve => resolve(created(makeFakeAccount())))
+    async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+      return await new Promise(resolve => { resolve(created(makeFakeAccount())) })
     }
-  }   
+  }
   return new ControllerStub()
 }
 
 describe('LogController Decorator', () => {
   test('Should call controller handle', async () => {
-    const { sut, controllerStub }  = makeSut()
+    const { sut, controllerStub } = makeSut()
     const handleSpy = vitest.spyOn(controllerStub, 'handle')
     await sut.handle(makeFakeRequest())
     expect(handleSpy).toHaveBeenCalledWith(makeFakeRequest())
   })
 
   test('Should return the same result of the controller', async () => {
-    const { sut }  = makeSut()
+    const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(created(makeFakeAccount()))
   })
 
   test('Should call LogErrorRepository with correct error if controller returns a server error', async () => {
-    const { sut, controllerStub, logErrorRepositoryStub }  = makeSut()
+    const { sut, controllerStub, logErrorRepositoryStub } = makeSut()
     const logSpy = vitest.spyOn(logErrorRepositoryStub, 'logError')
-    vitest.spyOn(controllerStub, 'handle').mockReturnValueOnce(new Promise(resolve => resolve(makeFakeServerError())))
+    vitest.spyOn(controllerStub, 'handle').mockReturnValueOnce(new Promise(resolve => { resolve(makeFakeServerError()) }))
     await sut.handle(makeFakeRequest())
     expect(logSpy).toHaveBeenLastCalledWith('any_stack')
   })

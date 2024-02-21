@@ -1,13 +1,13 @@
-import { describe, expect, test, vitest } from "vitest"
-import { LoginController } from "./login-controller"
-import { HttpRequest, Authentication, Validation, AuthenticationModel } from "./login-controller-protocols"
-import { badRequest, ok, serverError, unauthorized } from "../../helpers/http/http-helper"
-import { MissingParamError } from "../../errors"
+import { describe, expect, test, vitest } from 'vitest'
+import { LoginController } from './login-controller'
+import { HttpRequest, Authentication, Validation, AuthenticationModel } from './login-controller-protocols'
+import { badRequest, ok, serverError, unauthorized } from '../../helpers/http/http-helper'
+import { MissingParamError } from '../../errors'
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (authentication: AuthenticationModel): Promise<string>  {
-      return new Promise(resolve => resolve('any_token'))
+    async auth (authentication: AuthenticationModel): Promise<string> {
+      return await new Promise(resolve => { resolve('any_token') })
     }
   }
   return new AuthenticationStub()
@@ -16,7 +16,6 @@ const makeAuthentication = (): Authentication => {
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
     validate (input: any): Error {
-      //@ts-ignore
       return null
     }
   }
@@ -32,7 +31,7 @@ const makeFakeRequest = (): HttpRequest => ({
 
 interface SutTypes {
   sut: LoginController
-  authenticationStub: Authentication,
+  authenticationStub: Authentication
   validationStub: Validation
 }
 
@@ -53,22 +52,21 @@ describe('Login Controller', () => {
     const authSpy = vitest.spyOn(authenticationStub, 'auth')
     await sut.handle(makeFakeRequest())
     expect(authSpy).toHaveBeenLastCalledWith({
-      email: 'any_email@mail.com', 
+      email: 'any_email@mail.com',
       password: 'any_password'
     })
   })
 
   test('Should return 401 if invalid credentials are provided', async () => {
     const { sut, authenticationStub } = makeSut()
-    //@ts-ignore
-    vitest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise(resolve => resolve(null)))
+    vitest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise(resolve => { resolve(null) }))
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(unauthorized())
   })
 
   test('Should return 500 if Authentication throws', async () => {
     const { sut, authenticationStub } = makeSut()
-    vitest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())))
+    vitest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(new Promise((resolve, reject) => { reject(new Error()) }))
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(serverError(new Error()))
   })
@@ -78,7 +76,7 @@ describe('Login Controller', () => {
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
-  
+
   test('Should call Validation with correct value', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = vitest.spyOn(validationStub, 'validate')

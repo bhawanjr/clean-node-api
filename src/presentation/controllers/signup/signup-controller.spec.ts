@@ -1,4 +1,4 @@
-import { describe, expect, vitest, test } from 'vitest' 
+import { describe, expect, vitest, test } from 'vitest'
 import { SignUpController } from './signup-controller'
 import { MissingParamError, ServerError } from '../../errors'
 import { AccountModel, AddAccount, AddAccountModel, HttpRequest, Validation } from './signup-controller-protocols'
@@ -7,7 +7,7 @@ import { badRequest, created, serverError } from '../../helpers/http/http-helper
 const makeAddAccount = (): AddAccount => {
   class AddAccountStub implements AddAccount {
     async add (account: AddAccountModel): Promise<AccountModel> {
-      return new Promise(resolve => resolve(makeFakeAccount()))
+      return await new Promise(resolve => { resolve(makeFakeAccount()) })
     }
   }
   return new AddAccountStub()
@@ -15,8 +15,7 @@ const makeAddAccount = (): AddAccount => {
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
-    validate (input: any): Error {
-      //@ts-ignore
+    validate (input: any): Error | null {
       return null
     }
   }
@@ -40,7 +39,7 @@ const makeFakeRequest = (): HttpRequest => ({
 })
 
 interface SutTypes {
-  sut: SignUpController,
+  sut: SignUpController
   addAccountStub: AddAccount
   validationStub: Validation
 }
@@ -52,7 +51,7 @@ const makeSut = (): SutTypes => {
   return {
     sut,
     addAccountStub,
-    validationStub,
+    validationStub
   }
 }
 
@@ -60,10 +59,9 @@ describe('SignUp Controller', () => {
   test('Should return 500 if AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
     vitest.spyOn(addAccountStub, 'add').mockImplementationOnce(async () => {
-      return new Promise((resolve, reject) => reject(new Error()))      
+      return await new Promise((resolve, reject) => { reject(new Error()) })
     })
     const httpResponse = await sut.handle(makeFakeRequest())
-    //@ts-ignore
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 

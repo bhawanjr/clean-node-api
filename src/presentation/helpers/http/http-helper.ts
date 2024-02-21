@@ -23,6 +23,5 @@ export const unauthorized = (): HttpResponse => ({
 
 export const serverError = (error: Error): HttpResponse => ({
   statusCode: 500,
-  //@ts-ignore
-  body: new ServerError(error.stack)
+  body: new ServerError(error?.stack)
 })

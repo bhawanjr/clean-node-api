@@ -6,18 +6,12 @@
   "rules": {
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/consistent-type-imports": "off",
-    "@typescript-eslint/method-signature-style": "strictFunctionTypes"//,
-    // Para resolver o problema dos retornos null crei esta seção
-    // "@typescript-eslint/explicit-module-boundary-types": [
-    //   "error",
-    //   {
-    //     "allowDirectConstAssertionInArrowFunctions": true,
-    //     "allowHigherOrderFunctions": true,
-    //     "allowTypedFunctionExpressions": true,
-    //     "shouldTrackReferences": true,
-    //     "allowNullishReturn": true
-    //   }
-    // ]
-    // Até aqui
+    "@typescript-eslint/method-signature-style": "off",
+    "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-misused-promises": "off"
   }
 }

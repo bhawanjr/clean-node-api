@@ -3,13 +3,13 @@ import { Validation } from '../../protocols/validation'
 export class ValidationComposite implements Validation {
   constructor (private readonly validations: Validation[]) {}
 
-  //@ts-ignore
-  validate (input: any): Error {
+  validate (input: any): Error | null {
     for (const validation of this.validations) {
       const error = validation.validate(input)
       if (error) {
         return error
       }
     }
+    return null
   }
 }

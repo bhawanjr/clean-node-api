@@ -1,8 +1,8 @@
-import { describe, expect, test, vitest } from "vitest"
+import { describe, expect, test, vitest } from 'vitest'
 import { makeLoginValidation } from './login-validation-factory'
-import { ValidationComposite, RequiredFieldValidation, EmailValidation } from "../../../presentation/helpers/validators"
-import { Validation } from "../../../presentation/protocols/validation"
-import { EmailValidator } from "../../../presentation/protocols/email-validator"
+import { ValidationComposite, RequiredFieldValidation, EmailValidation } from '../../../presentation/helpers/validators'
+import { Validation } from '../../../presentation/protocols/validation'
+import { EmailValidator } from '../../../presentation/protocols/email-validator'
 
 vitest.mock('../../../presentation/helpers/validators/validation-composite')
 

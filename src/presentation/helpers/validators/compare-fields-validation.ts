@@ -7,10 +7,10 @@ export class CompareFieldsValidation implements Validation {
     private readonly fieldToCompareName: string
   ) {}
 
-  //@ts-ignore
-  validate(input: any): Error {
+  validate (input: any): Error | null {
     if (input[this.fieldName] !== input[this.fieldToCompareName]) {
       return new InvalidParamError(this.fieldToCompareName)
     }
+    return null
   }
 }

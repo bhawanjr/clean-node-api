@@ -1,12 +1,11 @@
-import { describe, expect, test, vitest } from "vitest"
-import { ValidationComposite } from "./validation-composite"
-import { MissingParamError } from "../../errors"
-import { Validation } from "../../protocols/validation"
+import { describe, expect, test, vitest } from 'vitest'
+import { ValidationComposite } from './validation-composite'
+import { MissingParamError } from '../../errors'
+import { Validation } from '../../protocols/validation'
 
 const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
-    validate(input: any): Error {
-      //@ts-ignore
+    validate (input: any): Error {
       return null
     }
   }
@@ -20,7 +19,7 @@ interface SutTypes {
 
 const makeSut = (): SutTypes => {
   const validationStubs = [
-    makeValidation(), 
+    makeValidation(),
     makeValidation()
   ]
   const sut = new ValidationComposite(validationStubs)
@@ -31,22 +30,22 @@ const makeSut = (): SutTypes => {
 }
 
 describe('Validation Composite', () => {
-  test('Should return an error if any validation fails', () => {    
+  test('Should return an error if any validation fails', () => {
     const { sut, validationStubs } = makeSut()
     vitest.spyOn(validationStubs[1], 'validate').mockReturnValueOnce(new MissingParamError('field'))
     const error = sut.validate({ field: 'any_value' })
     expect(error).toEqual(new MissingParamError('field'))
   })
 
-  test('Should return the first error if more than one validation fails', () => {    
+  test('Should return the first error if more than one validation fails', () => {
     const { sut, validationStubs } = makeSut()
-    vitest.spyOn(validationStubs[0], 'validate').mockReturnValueOnce(new Error)
+    vitest.spyOn(validationStubs[0], 'validate').mockReturnValueOnce(new Error())
     vitest.spyOn(validationStubs[1], 'validate').mockReturnValueOnce(new MissingParamError('field'))
     const error = sut.validate({ field: 'any_value' })
-    expect(error).toEqual(new Error)
+    expect(error).toEqual(new Error())
   })
 
-  test('Should not return if validation succeeds', () => {    
+  test('Should not return if validation succeeds', () => {
     const { sut } = makeSut()
     const error = sut.validate({ field: 'any_value' })
     expect(error).toBeFalsy()

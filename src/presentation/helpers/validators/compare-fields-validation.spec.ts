@@ -1,6 +1,6 @@
-import { describe, expect, test } from "vitest"
-import { InvalidParamError } from "../../errors"
-import { CompareFieldsValidation } from "./compare-fields-validation"
+import { describe, expect, test } from 'vitest'
+import { InvalidParamError } from '../../errors'
+import { CompareFieldsValidation } from './compare-fields-validation'
 
 const makeSut = (): CompareFieldsValidation => {
   return new CompareFieldsValidation('field', 'fieldToCompare')
@@ -15,7 +15,7 @@ describe('CompareFields Validation', () => {
     })
     expect(error).toEqual(new InvalidParamError('fieldToCompare'))
   })
-  
+
   test('Should not return if validation succeeds', () => {
     const sut = makeSut()
     const error = sut.validate({

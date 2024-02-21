@@ -1,8 +1,8 @@
-import { afterAll, beforeAll, beforeEach, describe, expect, test } from "vitest"
-import env from "../../../../main/config/env"
-import { LogMongoRepository } from "./log-mongo-repository"
-import { MongoHelper } from "../helpers/mongo-helper"
-import { Collection } from "mongodb"
+import { afterAll, beforeAll, beforeEach, describe, expect, test } from 'vitest'
+import env from '../../../../main/config/env'
+import { LogMongoRepository } from './log-mongo-repository'
+import { MongoHelper } from '../helpers/mongo-helper'
+import { Collection } from 'mongodb'
 
 const makeSut = (): LogMongoRepository => {
   return new LogMongoRepository()
@@ -28,6 +28,6 @@ describe('Log Mongo Repository', () => {
     const sut = makeSut()
     await sut.logError('any_error')
     const count = await errorCollection.countDocuments()
-    expect(count).toBe(1) 
+    expect(count).toBe(1)
   })
 })
