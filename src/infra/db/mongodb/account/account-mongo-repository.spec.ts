@@ -6,6 +6,12 @@ import { Collection, ObjectId } from 'mongodb'
 
 let accountCollection: Collection
 
+const makeAccount = () => ({
+  name: 'any_name',
+  email: 'any_email@mail.com',
+  password: 'any_password'
+})
+
 describe('Account Mongo Repository', () => {
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoUrl)
@@ -26,11 +32,7 @@ describe('Account Mongo Repository', () => {
 
   test('Should return an account on add success', async () => {
     const sut = makeSut()
-    const account = await sut.add({
-      name: 'any_name',
-      email: 'any_email@mail.com',
-      password: 'any_password'
-    })
+    const account = await sut.add(makeAccount())
     expect(account).toBeTruthy()
     expect(account.id).toBeTruthy()
     expect(account.name).toBe('any_name')
@@ -40,11 +42,7 @@ describe('Account Mongo Repository', () => {
 
   test('Should return an account on loadByEmail success', async () => {
     const sut = makeSut()
-    await accountCollection.insertOne({
-      name: 'any_name',
-      email: 'any_email@mail.com',
-      password: 'any_password'
-    })
+    await accountCollection.insertOne(makeAccount())
     const account = await sut.loadByEmail('any_email@mail.com')
     expect(account).toBeTruthy()
     expect(account.id).toBeTruthy()
@@ -61,15 +59,11 @@ describe('Account Mongo Repository', () => {
 
   test('Should update the account accessToken on updateAccessToken success', async () => {
     const sut = makeSut()
-    const _id = (await accountCollection.insertOne({
-      name: 'any_name',
-      email: 'any_email@mail.com',
-      password: 'any_password'
-    })).insertedId
-    const fakeAccount = await accountCollection.findOne({ _id })
+    const _id = (await accountCollection.insertOne(makeAccount())).insertedId.toString()
+    const fakeAccount = MongoHelper.mapper(_id, makeAccount())
     expect(fakeAccount?.accessToken).toBeFalsy()
-    await sut.updateAccessToken(fakeAccount?.id, 'any_token')
-    const account = await accountCollection.findOne({ _id })
+    await sut.updateAccessToken(fakeAccount.id, 'any_token')
+    const account = await accountCollection.findOne({ _id: new ObjectId(_id) })
     expect(account).toBeTruthy()
     expect(account?.accessToken).toBe('any_token')
   })
