@@ -2,8 +2,7 @@ import { afterAll, beforeAll, beforeEach, describe, expect, test } from 'vitest'
 import { AccountMongoRepository } from './account'
 import env from '../../../../main/config/env'
 import { MongoHelper } from '../helpers/mongo-helper'
-import { Collection } from 'mongodb'
-
+import { Collection, ObjectId } from 'mongodb'
 
 let accountCollection: Collection
 
@@ -58,5 +57,20 @@ describe('Account Mongo Repository', () => {
     const sut = makeSut()
     const account = await sut.loadByEmail('any_email@mail.com')
     expect(account).toBeFalsy()
+  })
+
+  test('Should update the account accessToken on updateAccessToken success', async () => {
+    const sut = makeSut()
+    const _id = (await accountCollection.insertOne({
+      name: 'any_name',
+      email: 'any_email@mail.com',
+      password: 'any_password'
+    })).insertedId
+    const fakeAccount = await accountCollection.findOne({ _id })
+    expect(fakeAccount?.accessToken).toBeFalsy()
+    await sut.updateAccessToken(fakeAccount?.id, 'any_token')
+    const account = await accountCollection.findOne({ _id })
+    expect(account).toBeTruthy()
+    expect(account?.accessToken).toBe('any_token')
   })
 })
