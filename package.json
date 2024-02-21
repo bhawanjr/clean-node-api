@@ -4,13 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/main/server.js",
+    "build": "rimraf dist && tsc --project tsconfig.json",
+    "dev": "sucrase-node src/main/server.ts",
     "lint": "eslint src --ext ts --max-warnings=0",
     "test:unit": "vitest",
     "test": "vitest --passWithNoTests --silent",
     "test:verbose": "vitest --passWithNoTests --coverage",
-    "prepare": "husky",
-    "tsc": "tsc --project tsconfig.json",
-    "start": "sucrase-node src/main/server.ts"
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +35,7 @@
     "git-commit-msg-linter": "^5.0.6",
     "husky": "^9.0.10",
     "lint-staged": "^15.2.2",
+    "rimraf": "^5.0.5",
     "sucrase": "^3.35.0",
     "supertest": "^6.3.4",
     "ts-node": "^10.9.2",
@@ -44,7 +46,6 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "express": "^4.18.2",
-    "fast-glob": "^3.3.2",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
     "validator": "^13.11.0"
