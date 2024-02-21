@@ -1,6 +1,6 @@
 import { describe, expect, test, vitest } from "vitest"
-import { makeLoginValidation } from './login-validation'
-import { ValidationComposite, RequiredFieldValidation, EmailValidation } from "../../../presentation/helpers/validators"
+import { ValidationComposite, CompareFieldsValidation, EmailValidation, RequiredFieldValidation } from "../../../presentation/helpers/validators"
+import { makeSignupValidation } from './signup-validation-factory'
 import { Validation } from "../../../presentation/protocols/validation"
 import { EmailValidator } from "../../../presentation/protocols/email-validator"
 
@@ -15,13 +15,14 @@ const makeEmailValidator = (): EmailValidator => {
   return new EmailValidatorStub()
 }
 
-describe('LoginValidation Factory', () => {
+describe('SignUpValidation Factory', () => {
   test('Should call ValidationComposite with all validations', () => {
-    makeLoginValidation()
+    makeSignupValidation()
     const validations: Validation[] = []
-    for (const field of ['email', 'password']) {
+    for (const field of ['name', 'email', 'password', 'passwordConfirmation']) {
       validations.push(new RequiredFieldValidation(field))
     }
+    validations.push(new CompareFieldsValidation('password', 'passwordConfirmation'))
     validations.push(new EmailValidation('email', makeEmailValidator()))
     expect(ValidationComposite).toHaveBeenCalledWith(validations)
   })

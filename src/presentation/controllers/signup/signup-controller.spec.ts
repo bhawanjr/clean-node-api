@@ -1,7 +1,7 @@
 import { describe, expect, vitest, test } from 'vitest' 
-import { SignUpController } from './signup'
+import { SignUpController } from './signup-controller'
 import { MissingParamError, ServerError } from '../../errors'
-import { AccountModel, AddAccount, AddAccountModel, HttpRequest, Validation } from './signup-protocols'
+import { AccountModel, AddAccount, AddAccountModel, HttpRequest, Validation } from './signup-controller-protocols'
 import { badRequest, created, serverError } from '../../helpers/http/http-helper'
 
 const makeAddAccount = (): AddAccount => {

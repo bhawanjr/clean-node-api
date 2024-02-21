@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, beforeEach, describe, expect, test } from "vitest"
 import env from "../../../../main/config/env"
-import { LogMongoRepository } from "./log"
+import { LogMongoRepository } from "./log-mongo-repository"
 import { MongoHelper } from "../helpers/mongo-helper"
 import { Collection } from "mongodb"
 
