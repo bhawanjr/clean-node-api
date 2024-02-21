@@ -34,8 +34,8 @@ export const MongoHelper = {
     return this.client
   },
 
-  mapper: (newId: string, model: any): any => {
-    const newObject = Object.assign({}, {id: newId }, model)
+  mapper: (_id: string, model: any): any => {
+    const newObject = Object.assign({}, {id: _id }, model)
     delete newObject._id
     return newObject
   }
