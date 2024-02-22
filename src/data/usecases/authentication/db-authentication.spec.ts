@@ -104,7 +104,8 @@ describe('DbAuthentication UseCase', () => {
 
   test('Should return null if LoadAccountByEmailRepository returns null', async () => {
     const { sut, loadAccountByEmailRepositoryStub } = makeSut()
-    vitest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockReturnValueOnce(null)
+    const nullValue: Promise<AccountModel> = null as unknown as Promise<AccountModel>
+    vitest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockReturnValueOnce(nullValue)
     const accessToken = await sut.auth(makeFakeAuthentication())
     expect(accessToken).toBeNull()
   })

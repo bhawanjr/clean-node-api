@@ -1,6 +1,6 @@
 import request from 'supertest'
-import app from '../app'
 import { describe, test } from 'vitest'
+import app from '../app'
 
 describe('Body Parser Middleware', () => {
   test('Should parse body as json', async () => {
@@ -9,7 +9,7 @@ describe('Body Parser Middleware', () => {
     })
     await request(app)
       .post('/test_body_parser')
-      .send({ name: 'Rodrigo' })
-      .expect({ name: 'Rodrigo' })
+      .send({ name: 'Nicolas' })
+      .expect({ name: 'Nicolas' })
   })
 })
