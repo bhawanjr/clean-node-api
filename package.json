@@ -9,9 +9,8 @@
     "dev": "sucrase-node src/main/server.ts",
     "nodemon": "nodemon --exec ts-node src/main/server.ts",
     "lint": "eslint src --ext ts --max-warnings=0",
-    "lintfix": "eslint src --ext ts --max-warnings=0 --fix",
-    "test": "jest --passWithNoTests --runInBand --no-cache",
-    "test:unit": "jest --passWithNoTests --silent",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:unit": "npm test -- --watch -c jest-integration-config.js",
     "test:verbose": "jest --passWithNoTests --coverage",
     "test:staged": "npm test -- --findRelatedTests"
   },
