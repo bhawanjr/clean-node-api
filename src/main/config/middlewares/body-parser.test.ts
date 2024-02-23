@@ -1,5 +1,4 @@
 import request from 'supertest'
-import { describe, test } from 'vitest'
 import app from '../app'
 
 describe('Body Parser Middleware', () => {

@@ -1,14 +1,11 @@
-import { describe, expect, test, vitest } from 'vitest'
 import { EmailValidatorAdapter } from './email-validator-adapter'
 import validator from 'validator'
 
-vitest.mock('validator', async () => {
-  return {
-    default: {
-      isEmail: () => true
-    }
+jest.mock('validator', () => ({
+  isEmail (): boolean {
+    return true
   }
-})
+}))
 
 const makeSut = () => {
   return new EmailValidatorAdapter()
@@ -17,7 +14,7 @@ const makeSut = () => {
 describe('EmailValidator Adapter', () => {
   test('Should returns false if validator returns false', () => {
     const sut = makeSut()
-    vitest.spyOn(validator, 'isEmail').mockReturnValueOnce(false)
+    jest.spyOn(validator, 'isEmail').mockReturnValueOnce(false)
     const isValid = sut.isValid('invalid_email@email.com')
     expect(isValid).toBe(false)
   })
@@ -30,7 +27,7 @@ describe('EmailValidator Adapter', () => {
 
   test('Should call validator with correct email', () => {
     const sut = makeSut()
-    const isEmailSpy = vitest.spyOn(validator, 'isEmail')
+    const isEmailSpy = jest.spyOn(validator, 'isEmail')
     sut.isValid('valid_email@mail.com')
     expect(isEmailSpy).toHaveBeenCalledWith('valid_email@mail.com')
   })

@@ -1,4 +1,3 @@
-import { vitest, describe, expect, test } from 'vitest'
 import { LogControllerDecorator } from './log-controller-decorator'
 import { Controller, HttpRequest, HttpResponse } from '../../presentation/protocols'
 import { serverError, created } from '../../presentation/helpers/http/http-helper'
@@ -65,7 +64,7 @@ const makeControllerStub = (): Controller => {
 describe('LogController Decorator', () => {
   test('Should call controller handle', async () => {
     const { sut, controllerStub } = makeSut()
-    const handleSpy = vitest.spyOn(controllerStub, 'handle')
+    const handleSpy = jest.spyOn(controllerStub, 'handle')
     await sut.handle(makeFakeRequest())
     expect(handleSpy).toHaveBeenCalledWith(makeFakeRequest())
   })
@@ -78,8 +77,8 @@ describe('LogController Decorator', () => {
 
   test('Should call LogErrorRepository with correct error if controller returns a server error', async () => {
     const { sut, controllerStub, logErrorRepositoryStub } = makeSut()
-    const logSpy = vitest.spyOn(logErrorRepositoryStub, 'logError')
-    vitest.spyOn(controllerStub, 'handle').mockReturnValueOnce(new Promise(resolve => { resolve(makeFakeServerError()) }))
+    const logSpy = jest.spyOn(logErrorRepositoryStub, 'logError')
+    jest.spyOn(controllerStub, 'handle').mockReturnValueOnce(new Promise(resolve => { resolve(makeFakeServerError()) }))
     await sut.handle(makeFakeRequest())
     expect(logSpy).toHaveBeenLastCalledWith('any_stack')
   })

@@ -1,14 +1,15 @@
-import { describe, expect, test, vitest } from 'vitest'
 import jwt from 'jsonwebtoken'
 import { JwtAdapter } from './jwt-adapter'
 
-vitest.mock('jsonwebtoken', () => {
-  return {
-    default: {
-      sign: () => 'any_token'
-    }
+jest.mock('jsonwebtoken', () => ({
+  async sign (): Promise<string> {
+    return 'any_token'
+  },
+
+  async verify (): Promise<string> {
+    return 'any_value'
   }
-})
+}))
 
 const makeSut = (): JwtAdapter => {
   return new JwtAdapter('secret')
@@ -17,7 +18,7 @@ const makeSut = (): JwtAdapter => {
 describe('Jwt Adapter', () => {
   test('Should call sign with correct values', async () => {
     const sut = makeSut()
-    const signSpy = vitest.spyOn(jwt, 'sign')
+    const signSpy = jest.spyOn(jwt, 'sign')
     await sut.encrypt('any_id')
     expect(signSpy).toHaveBeenCalledWith({ id: 'any_id' }, 'secret')
   })
@@ -30,7 +31,7 @@ describe('Jwt Adapter', () => {
 
   test('Should throw if sign throws', async () => {
     const sut = makeSut()
-    vitest.spyOn(jwt, 'sign').mockImplementationOnce(() => {
+    jest.spyOn(jwt, 'sign').mockImplementationOnce(() => {
       throw new Error()
     })
     const promise = sut.encrypt('any_id')

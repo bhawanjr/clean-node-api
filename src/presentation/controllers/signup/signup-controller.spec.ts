@@ -1,4 +1,3 @@
-import { describe, expect, vitest, test } from 'vitest'
 import { SignUpController } from './signup-controller'
 import { MissingParamError, ServerError } from '../../errors'
 import { AccountModel, AddAccount, AddAccountModel, HttpRequest, Validation } from './signup-controller-protocols'
@@ -58,7 +57,7 @@ const makeSut = (): SutTypes => {
 describe('SignUp Controller', () => {
   test('Should return 500 if AddAccount throws', async () => {
     const { sut, addAccountStub } = makeSut()
-    vitest.spyOn(addAccountStub, 'add').mockImplementationOnce(async () => {
+    jest.spyOn(addAccountStub, 'add').mockImplementationOnce(async () => {
       return await new Promise((resolve, reject) => { reject(new Error()) })
     })
     const httpResponse = await sut.handle(makeFakeRequest())
@@ -67,7 +66,7 @@ describe('SignUp Controller', () => {
 
   test('Should call AddAccount with correct values', async () => {
     const { sut, addAccountStub } = makeSut()
-    const addSpy = vitest.spyOn(addAccountStub, 'add')
+    const addSpy = jest.spyOn(addAccountStub, 'add')
     await sut.handle(makeFakeRequest())
     expect(addSpy).toHaveBeenCalledWith({
       name: 'any_name',
@@ -84,7 +83,7 @@ describe('SignUp Controller', () => {
 
   test('Should call Validation with correct value', async () => {
     const { sut, validationStub } = makeSut()
-    const validateSpy = vitest.spyOn(validationStub, 'validate')
+    const validateSpy = jest.spyOn(validationStub, 'validate')
     const httpRequest = makeFakeRequest()
     await sut.handle(httpRequest)
     expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
@@ -92,7 +91,7 @@ describe('SignUp Controller', () => {
 
   test('Should return 400 if Validation returns an error', async () => {
     const { sut, validationStub } = makeSut()
-    vitest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('any_field'))
+    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new MissingParamError('any_field'))
     const httpResponse = await sut.handle(makeFakeRequest())
     expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')))
   })
