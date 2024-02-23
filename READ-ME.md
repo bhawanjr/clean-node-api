@@ -9,3 +9,13 @@ https://stackoverflow.com/questions/40766654/node-js-mongodb-insert-one-and-retu
 # username: clean-node
 # password: 12345678
 
+<!-- Docker -->
+# Mostra todos os containers que estão rodando
+#### docker ps
+# Mostra todos os containers
+#### docker ps -a
+# Limpar os containers
+#### específico ===> docler container rm (as três primeiras letras do container)
+#### todos os containers ===> docker container prune 
+# Gerar uma imagem
+#### docker build -t nome-do-container .
