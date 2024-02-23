@@ -1,4 +1,5 @@
 node_module
 dist
+data
 coverage
 .vscode
