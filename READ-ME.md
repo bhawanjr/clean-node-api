@@ -19,3 +19,5 @@ https://stackoverflow.com/questions/40766654/node-js-mongodb-insert-one-and-retu
 #### todos os containers ===> docker container prune 
 # Gerar uma imagem
 #### docker build -t nome-do-container .
+# Rodar o serviço
+#### docker run -p 5001:5000 clean-node-api
