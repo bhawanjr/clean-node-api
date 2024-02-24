@@ -21,3 +21,16 @@ https://stackoverflow.com/questions/40766654/node-js-mongodb-insert-one-and-retu
 #### docker build -t nome-do-container .
 # Rodar o serviço
 #### docker run -p 5001:5000 clean-node-api
+
+# Rodar e parar o container
+tsc -w
+npm run up
+npm run down
+
+# Atualizar as dependencias
+#### npm update
+
+# Corrigir as vulnerabilidades
+#### nom audit fix
+# Forçar as versões mais atuais
+#### nom audit fix -- force
