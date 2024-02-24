@@ -1,6 +1,7 @@
 node_modules
 dist
 data
+!src/data
 coverage
 .vscode
 READ-ME_DEV.MD

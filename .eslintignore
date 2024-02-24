@@ -1,6 +1,6 @@
 node_module
 dist
-data
+./data
 coverage
 .vscode
 docs/dev
