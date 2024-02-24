@@ -4,15 +4,16 @@
     "project": "./tsconfig.eslint.json"
   },
   "rules": {
-    "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/consistent-type-imports": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/method-signature-style": "off",
     "@typescript-eslint/naming-convention": "off",
-    "@typescript-eslint/no-unsafe-argument": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-misused-promises": "off",
-    "@typescript-eslint/prefer-nullish-coalescing": "off"
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off"
   }
 }
