@@ -22,5 +22,5 @@
 5. ⛔️ Retorna erro **403** se o email fornecido já estiver em uso
 6. ✅ Retorna erro **500** se der erro ao tentar gerar uma senha criptografada
 7. ✅ Retorna erro **500** se der erro ao tentar criar a conta do usuário
-8. ✅ Retorna erro **500** se der erro ao tentar gerar o token de acesso
-9. ✅ Retorna erro **500** se der erro ao tentar atualizar o usuário com o token de acesso gerado
+8. ⛔️ Retorna erro **500** se der erro ao tentar gerar o token de acesso
+9. ⛔️ Retorna erro **500** se der erro ao tentar atualizar o usuário com o token de acesso gerado
