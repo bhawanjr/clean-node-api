@@ -7,6 +7,7 @@ export const MongoHelper = {
 
   async connect (uri: string): Promise<void> {
     this.uri = uri
+    console.log('Conectando a ' + this.uri)
     this.client = await MongoClient.connect(this.uri, {})
     this.isConnected = true
   },
