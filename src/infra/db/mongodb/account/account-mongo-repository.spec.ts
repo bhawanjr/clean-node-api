@@ -1,11 +1,11 @@
-import { AccountMongoRepository } from './account-mongo-repository'
 import env from '../../../../main/config/env'
+import { AccountMongoRepository } from './account-mongo-repository'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { Collection, ObjectId } from 'mongodb'
 
 let accountCollection: Collection
 
-const makeAccount = () => ({
+const makeAccountFake = () => ({
   name: 'any_name',
   email: 'any_email@mail.com',
   password: 'any_password'
@@ -31,7 +31,7 @@ describe('Account Mongo Repository', () => {
 
   test('Should return an account on add success', async () => {
     const sut = makeSut()
-    const account = await sut.add(makeAccount())
+    const account = await sut.add(makeAccountFake())
     expect(account).toBeTruthy()
     expect(account.id).toBeTruthy()
     expect(account.name).toBe('any_name')
@@ -41,7 +41,7 @@ describe('Account Mongo Repository', () => {
 
   test('Should return an account on loadByEmail success', async () => {
     const sut = makeSut()
-    await accountCollection.insertOne(makeAccount())
+    await accountCollection.insertOne(makeAccountFake())
     const account = await sut.loadByEmail('any_email@mail.com')
     expect(account).toBeTruthy()
     expect(account.id).toBeTruthy()
@@ -58,8 +58,8 @@ describe('Account Mongo Repository', () => {
 
   test('Should update the account accessToken on updateAccessToken success', async () => {
     const sut = makeSut()
-    const _id = (await accountCollection.insertOne(makeAccount())).insertedId.toString()
-    const fakeAccount = MongoHelper.mapper(_id, makeAccount())
+    const _id = (await accountCollection.insertOne(makeAccountFake())).insertedId.toString()
+    const fakeAccount = MongoHelper.mapper(_id, makeAccountFake())
     expect(fakeAccount?.accessToken).toBeFalsy()
     await sut.updateAccessToken(fakeAccount.id, 'any_token')
     const account = await accountCollection.findOne({ _id: new ObjectId(_id) })
