@@ -42,7 +42,7 @@ interface SutTypes {
 }
 
 const makeSut = (): SutTypes => {
-  const controllerStub = makeControllerStub()
+  const controllerStub = makeController()
   const logErrorRepositoryStub = makeLogErrorRepository()
   const sut = new LogControllerDecorator(controllerStub, logErrorRepositoryStub)
   return {
@@ -52,7 +52,7 @@ const makeSut = (): SutTypes => {
   }
 }
 
-const makeControllerStub = (): Controller => {
+const makeController = (): Controller => {
   class ControllerStub implements Controller {
     async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
       return await new Promise(resolve => { resolve(created(makeFakeAccount())) })
