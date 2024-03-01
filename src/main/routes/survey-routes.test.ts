@@ -8,6 +8,19 @@ import { sign } from 'jsonwebtoken'
 let surveyCollection: Collection
 let accountCollection: Collection
 
+const makeAccessToken = async (): Promise<string> => {
+  const res = await accountCollection.insertOne({
+    name: 'Bernardo',
+    email: 'bernardo@email.com',
+    password: '1234',
+    role: 'admin'
+  })
+  const id = res.insertedId.toString()
+  const accessToken = sign({ id }, env.jwtSecret)
+  await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken } })
+  return accessToken
+}
+
 describe('Survey Routes', () => {
   beforeAll(async () => {
     await MongoHelper.connect(env.mongoUrl)
@@ -41,15 +54,7 @@ describe('Survey Routes', () => {
     })
 
     test('Should return 204 on add survey with valid accessToken', async () => {
-      const res = await accountCollection.insertOne({
-        name: 'Bernardo',
-        email: 'bernardo@email.com',
-        password: '1234',
-        role: 'admin'
-      })
-      const id = res.insertedId.toString()
-      const accessToken = sign({ id }, env.jwtSecret)
-      await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken } })
+      const accessToken = await makeAccessToken()
       await request(app)
         .post('/api/surveys')
         .set('x-access-token', accessToken)
@@ -73,15 +78,11 @@ describe('Survey Routes', () => {
         .expect(403)
     })
 
+    /* Informação importante:
+      O teste abaixo poderia retornar 404 e, com isto, não precisaria fazer o insert no banco de dados,
+      tendo em vista que o teste já foi feito em outra "layer"
+    */
     test('Should return 200 on load surveys with valid accessToken', async () => {
-      const res = await accountCollection.insertOne({
-        name: 'Bernardo',
-        email: 'bernardo@email.com',
-        password: '1234'
-      })
-      const id = res.insertedId.toString()
-      const accessToken = sign({ id }, env.jwtSecret)
-      await accountCollection.updateOne({ _id: new ObjectId(id) }, { $set: { accessToken } })
       await surveyCollection.insertMany([{
         question: 'any_question',
         answers: [{
@@ -90,6 +91,7 @@ describe('Survey Routes', () => {
         }],
         date: new Date()
       }])
+      const accessToken = await makeAccessToken()
       await request(app)
         .get('/api/surveys')
         .set('x-access-token', accessToken)
