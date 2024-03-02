@@ -15,6 +15,7 @@
     "@typescript-eslint/prefer-nullish-coalescing": "off",
     "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
-    "@typescript-eslint/return-await": "off"
+    "@typescript-eslint/return-await": "off",
+    "@typescript-eslint/consistent-type-definitions": "off"
   }
 }
