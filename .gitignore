@@ -6,3 +6,4 @@ coverage
 .vscode
 READ-ME_DEV.MD
 docs/dev
+.env
