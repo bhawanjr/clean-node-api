@@ -16,7 +16,6 @@ const makeFakeSurveyData = (): AddSurveyModel => ({
 const makeAddSurveyRepository = (): AddSurveyRepository => {
   class AddSurveyRepositoryStub implements AddSurveyRepository {
     async add (account: AddSurveyModel): Promise<void> {
-      // eslint-disable-next-line @typescript-eslint/no-confusing-void-expression
       return await new Promise<void>(resolve => { resolve() })
     }
   }

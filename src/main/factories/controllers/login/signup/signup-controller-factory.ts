@@ -1,4 +1,4 @@
-import { makeSignupValidation } from './signup-validation-factory'
+import { makeSignupValidation } from '@/main/factories/controllers/login/signup/signup-validation-factory'
 import { makeLogControllerDecorator } from '@/main/factories/decorators/log-controller-decorator-factory'
 import { makeDbAddAccount } from '@/main/factories/usecases/account/add-account/db-account-factory'
 import { makeDbAuthentication } from '@/main/factories/usecases/account/authentication/db-authentication-factory'
