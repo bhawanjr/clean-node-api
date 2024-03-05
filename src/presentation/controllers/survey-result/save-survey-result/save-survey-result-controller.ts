@@ -1,4 +1,4 @@
-import { forbidden, ok, serverError } from '@/presentation/helpers/http/http-helper'
+import { created, forbidden, serverError } from '@/presentation/helpers/http/http-helper'
 import { Controller, HttpRequest, HttpResponse, LoadSurveyById, SaveSurveyResult } from './save-survey-result-controller.protocols'
 import { InvalidParamError } from '@/presentation/errors'
 
@@ -28,7 +28,7 @@ export class SaveSurveyResultController implements Controller {
         answer,
         date: new Date()
       })
-      return ok(surveyResult)
+      return created(surveyResult)
     } catch (error) {
       return serverError(error)
     }
