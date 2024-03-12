@@ -1,11 +1,10 @@
-# Listar enquetes
+# Resultado da enquete
 
 > ## Caso de sucesso
 
 1. ⛔️ Recebe uma requisição do tipo **GET** na rota **/api/surveys/{survey_id}/results**
 2. ⛔️ Valida se a requisição foi feita por um **usuário**
-3. ⛔️ Retorna **204** se não tiver nenhuma enquete
-4. ⛔️ Retorna **200** com os dados das enquetes
+3. ⛔️ Retorna **200** com os dados das enquetes
 
 > ## Exceções
 
