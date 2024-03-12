@@ -18,6 +18,14 @@
         "@typescript-eslint/return-await": "off",
         "@typescript-eslint/consistent-type-definitions": "off",
         "@typescript-eslint/no-confusing-void-expression": "off",
-        "@typescript-eslint/prefer-return-this-type": "off"
+        "@typescript-eslint/prefer-return-this-type": "off",
+        "@typescript-eslint/space-before-function-paren": [
+            "error",
+            {
+                "anonimous": "always",
+                "named": "always",
+                "asyncArrow": "always"
+            }
+        ]
     }
 }
