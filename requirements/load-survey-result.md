@@ -10,7 +10,7 @@
 
 1. ⛔️ Retorna erro **404** se a API não existir
 2. ⛔️ Retorna erro **403** se não for um usuário
-3. ⛔️ Retorna erro **500** se der erro ao tentar listar as enquetes
+3. ✅ Retorna erro **500** se der erro ao tentar listar as enquetes
 
 ## Legendas
 
