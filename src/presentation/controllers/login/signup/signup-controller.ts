@@ -3,7 +3,7 @@ import { created, badRequest, serverError, forbidden } from '@/presentation/help
 import { EmailInUseError } from '@/presentation/errors'
 
 export class SignUpController implements Controller {
-  constructor (
+  constructor(
     private readonly addAccount: AddAccount,
     private readonly validation: Validation,
     private readonly authentication: Authentication
@@ -24,11 +24,11 @@ export class SignUpController implements Controller {
       if (!account) {
         return forbidden(new EmailInUseError())
       }
-      const accessToken = await this.authentication.auth({
+      const model = await this.authentication.auth({
         email,
         password
       })
-      return created({ accessToken })
+      return created(model)
     } catch (error) {
       return serverError(error)
     }
