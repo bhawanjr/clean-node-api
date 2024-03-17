@@ -8,7 +8,7 @@ import MockDate from 'mockdate'
 
 const mockRequest = (): HttpRequest => ({
   params: {
-    surveyId: 'any_survey_id'
+    surveyId: 'any_id'
   },
   body: {
     answer: 'any_answer'
@@ -46,7 +46,7 @@ describe('SeveSurveyResult Controller', () => {
     const { sut, loadSurveyByIdStub } = makeSut()
     const loadByIdSpy = jest.spyOn(loadSurveyByIdStub, 'loadById')
     await sut.handle(mockRequest())
-    expect(loadByIdSpy).toHaveBeenCalledWith('any_survey_id')
+    expect(loadByIdSpy).toHaveBeenCalledWith('any_id')
   })
 
   test('Should return 403 if LoadSurveyById returns null', async () => {
@@ -67,7 +67,7 @@ describe('SeveSurveyResult Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle({
       params: {
-        surveyId: 'any_survey_id'
+        surveyId: 'any_id'
       },
       body: {
         answer: 'wrong_answer'
@@ -81,7 +81,7 @@ describe('SeveSurveyResult Controller', () => {
     const saveSpy = jest.spyOn(saveSurveyResultStub, 'save')
     await sut.handle(mockRequest())
     expect(saveSpy).toHaveBeenCalledWith({
-      surveyId: 'any_survey_id',
+      surveyId: 'any_id',
       accountId: 'any_account_id',
       answer: 'any_answer',
       date: new Date()

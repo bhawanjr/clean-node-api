@@ -20,6 +20,15 @@ const mockServerError = (): HttpResponse => {
   return serverError(fakeError)
 }
 
+const mockControllerStub = (): Controller => {
+  class ControllerStub implements Controller {
+    async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+      return await Promise.resolve(created(mockAccountModel()))
+    }
+  }
+  return new ControllerStub()
+}
+
 type SutTypes = {
   sut: LogControllerDecorator
   controllerStub: Controller
@@ -27,7 +36,7 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const controllerStub = makeController()
+  const controllerStub = mockControllerStub()
   const logErrorRepositoryStub = mockLogErrorRepository()
   const sut = new LogControllerDecorator(controllerStub, logErrorRepositoryStub)
   return {
@@ -35,15 +44,6 @@ const makeSut = (): SutTypes => {
     controllerStub,
     logErrorRepositoryStub
   }
-}
-
-const makeController = (): Controller => {
-  class ControllerStub implements Controller {
-    async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
-      return await Promise.resolve(created(mockAccountModel()))
-    }
-  }
-  return new ControllerStub()
 }
 
 describe('LogController Decorator', () => {
